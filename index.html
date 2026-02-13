@@ -630,7 +630,56 @@ window.addEventListener('scroll', function() {
           <p style="font-family: 'Dancing Script', cursive; font-size: 1.9rem; margin: 0.3rem 0;"> You said yesss sanuuuu </p>
           <p style="font-size: 1.2rem;"> I'm the happiest person alive, gudiya 🥰</p>
         </div>
+<!-- DYNAMIC TIME MESSAGE -->
+<div id="timeMessage" class="time-message">
+  <i class="fas fa-clock"></i> 
+  <span id="currentTime"></span> 
+  and somewhere I am thinking about you 💭
+</div>
 
+<style>
+.time-message {
+  background: rgba(255, 220, 240, 0.8);
+  backdrop-filter: blur(4px);
+  border-radius: 60px 20px 60px 20px;
+  padding: 0.8rem 1.5rem;
+  margin: 1rem 0 1.5rem;
+  border: 2px solid #ffb6c1;
+  box-shadow: 0 6px 0 #e8b4b4;
+  font-size: 1.1rem;
+  color: #8e3b4c;
+  text-align: center;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.time-message i {
+  color: #ff4d6d;
+  font-size: 1.3rem;
+  animation: pulse 2s infinite;
+}
+</style>
+
+<script>
+// Update time every second
+function updateTimeMessage() {
+  const now = new Date();
+  const options = { 
+    hour: '2-digit', 
+    minute: '2-digit', 
+    second: '2-digit', 
+    hour12: true,
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone // user's local time
+  };
+  const timeString = now.toLocaleTimeString([], options);
+  document.getElementById('currentTime').textContent = timeString;
+}
+updateTimeMessage();
+setInterval(updateTimeMessage, 1000);
+</script>
         <!-- 💖 COUNTDOWN TIMER – only DAYS & HOURS since July 13, 2024 -->
         <div class="countdown-container">
           <div class="countdown-title">⏳ Time since I proposed </div>
