@@ -11,6 +11,16 @@
   <!-- canvas-confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
   <style>
+
+    /* ---------- HEART CURSOR ---------- */
+body {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ff4d6d" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') 12 12, auto;
+}
+
+/* For links/buttons, keep pointer but with heart */
+a, button, .btn, .nav-btn, .back-btn, .music-toggle, .surprise-btn, #yesBtn, #noBtn, #theRing {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ff4d6d" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') 12 12, pointer;
+}
     /* ---------- RESET & GLOBAL ROMANTIC VIBE ---------- */
     * {
       margin: 0;
@@ -529,6 +539,39 @@
   </style>
 </head>
 <body>
+
+  <!-- HEARTBEAT SCROLL PROGRESS BAR -->
+<div id="scrollProgressBar" class="progress-bar"></div>
+
+<style>
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 6px;
+  background: linear-gradient(90deg, #ff9eb5, #ff4d6d, #ffb3c6);
+  z-index: 9999;
+  box-shadow: 0 0 10px #ff4d6d;
+  animation: heartbeatProgress 1.5s ease-in-out infinite;
+  border-radius: 0 3px 3px 0;
+}
+
+@keyframes heartbeatProgress {
+  0%, 100% { opacity: 1; height: 6px; }
+  50% { opacity: 0.7; height: 8px; }
+}
+</style>
+
+<script>
+// Update scroll progress bar width
+window.addEventListener('scroll', function() {
+  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  document.getElementById('scrollProgressBar').style.width = scrolled + '%';
+});
+</script>
   <div class="heart-bg">
     <i class="fas fa-heart" style="top: 10%; left: 5%;"></i>
     <i class="fas fa-heart" style="top: 15%; left: 90%; font-size: 2.5rem; animation-delay: 1s;"></i>
@@ -1292,14 +1335,63 @@ window.proposeRing = function() {
       });
     })();
   </script>
-  <!-- 
-    💕 CUSTOMIZATION GUIDE:
-    - Her photo: replace src in .her-photo-frame img
-    - 10 polaroids: replace <i> with <img src="..."> inside .polaroid-img
-    - Reasons: edit text in each .reason-card
-    - Audio: replace #personalAudio src with your voice recording
-    - Names: replace [Her Name] and [Your Name] everywhere
-    - Proposal date: edit 'July 13, 2024' in startCountdown() if needed
-  -->
+  <!-- BACK TO US BUTTON -->
+<div id="backToUsBtn" class="back-to-us" onclick="scrollToTop()">
+  <i class="fas fa-heart"></i> Back to Us
+</div>
+
+<style>
+.back-to-us {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #ff4d6d;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 60px 20px 60px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 6px 0 #b32d4a;
+  cursor: pointer;
+  display: none; /* hidden by default */
+  align-items: center;
+  gap: 8px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  border: 1px solid white;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.back-to-us:hover {
+  transform: scale(1.05);
+  background: #ff3355;
+}
+
+.back-to-us i {
+  font-size: 1.2rem;
+  animation: heartbeat 1.5s infinite;
+}
+
+/* Show button when scrolled down */
+.show-back-to-us {
+  display: flex !important;
+}
+</style>
+
+<script>
+// Show/hide back to us button on scroll
+window.addEventListener('scroll', function() {
+  const btn = document.getElementById('backToUsBtn');
+  if (window.scrollY > 400) {
+    btn.classList.add('show-back-to-us');
+  } else {
+    btn.classList.remove('show-back-to-us');
+  }
+});
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
 </body>
 </html>
