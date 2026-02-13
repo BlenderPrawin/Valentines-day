@@ -541,9 +541,10 @@
     <i class="fas fa-music" id="musicIcon"></i>
     <span id="musicText">Play Music</span>
   </div>
-  <audio id="valentineMusic" loop preload="auto">
-    <source src="https://blenderprawin.github.io/Valentines-day/music.mp3" type="audio/mpeg">
-  </audio>
+ <audio id="valentineMusic" loop preload="none">
+  <source src="https://blenderprawin.github.io/Valentines-day/music.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_6a5c0deb2a.mp3?filename=romantic-piano-theme-116198.mp3" type="audio/mpeg">
+</audio>
 
   <!-- MAIN CARD -->
   <div class="card">
@@ -1038,18 +1039,33 @@
     (function(){
       "use strict";
 
-      // ---------- MUSIC CONTROL ----------
-      const audio = document.getElementById('valentineMusic');
-      const musicToggle = document.getElementById('musicToggle');
-      const musicIcon = document.getElementById('musicIcon');
-      const musicText = document.getElementById('musicText');
-      let musicPlaying = false;
-      audio.volume = 0.3;
-      musicToggle.addEventListener('click', function() {
-        if (musicPlaying) { audio.pause(); musicIcon.className = 'fas fa-music'; musicText.innerText = 'Play Music'; }
-        else { audio.play().then(() => { musicIcon.className = 'fas fa-pause-circle'; musicText.innerText = 'Pause Music'; }).catch(()=>{}); }
-        musicPlaying = !musicPlaying;
-      });
+     // ---------- MUSIC CONTROL ----------
+const audio = document.getElementById('valentineMusic');
+const musicToggle = document.getElementById('musicToggle');
+const musicIcon = document.getElementById('musicIcon');
+const musicText = document.getElementById('musicText');
+let musicPlaying = false;
+audio.volume = 0.3;
+
+musicToggle.addEventListener('click', function(e) {
+  e.preventDefault();
+  if (musicPlaying) {
+    audio.pause();
+    musicIcon.className = 'fas fa-music';
+    musicText.innerText = 'Play Music';
+  } else {
+    audio.play().then(() => {
+      musicIcon.className = 'fas fa-pause-circle';
+      musicText.innerText = 'Pause Music';
+    }).catch(error => {
+      console.log("Playback failed:", error);
+      alert("Please tap again – music will start!");
+      // Try one more time with user interaction
+      audio.play();
+    });
+  }
+  musicPlaying = !musicPlaying;
+});
 
       // ---------- PAGE NAVIGATION ----------
       const pages = document.querySelectorAll('.page');
